@@ -1,6 +1,8 @@
+var path = require('path');
+
 var webpack = require('webpack');
 var webpackMerge = require('webpack-merge');
-var commonConfig = require('./webpack.config.common');
+var commonConfig = require('./webpack.config.common.js');
 
 module.exports = webpackMerge.smart(commonConfig, {
     entry: {
@@ -8,29 +10,28 @@ module.exports = webpackMerge.smart(commonConfig, {
     },
 
     output: {
-        path: './public/js/app',
+        path: path.resolve(__dirname + '/public/js/app'),
         filename: 'bundle.js',
         publicPath: '/js/app/',
         chunkFilename: '[id].[hash].chunk.js'
     },
 
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.ts$/,
-                loaders: [
+                use: [
                     'awesome-typescript-loader',
                     'angular2-template-loader',
-                    'angular2-router-loader?aot=true&genDir=public/js/app'
+                    'angular-router-loader?aot=true'
                 ]
             }
         ]
     },
 
     plugins: [
-        new webpack.NoEmitOnErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: false
         })
     ]
-})
+});
