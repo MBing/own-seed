@@ -28,7 +28,7 @@ module.exports = webpackMerge.smart(commonConfig, {
     },
 
     plugins: [
-        new webpack.NoErrorPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: false
         })
